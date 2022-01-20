@@ -22,12 +22,10 @@ httpServer.listen(httpPort, () =>
   console.log(`Http Server listening on port: ${httpPort} in ${envName} mode.`)
 );
 
-__dirname = path.dirname(__dirname);
-
 //Instantiate the https server
 const httpsServerOptions = {
-  key: fs.readFileSync(path.resolve(__dirname, "src/https/key.pem")),
-  cert: fs.readFileSync(path.resolve(__dirname, "src/https/cert.pem")),
+  key: fs.readFileSync(path.resolve(__dirname, "..", "src/https/key.pem")),
+  cert: fs.readFileSync(path.resolve(__dirname, "..", "src/https/cert.pem")),
 };
 
 const httpsServer = https.createServer(httpsServerOptions, (req, res) => {

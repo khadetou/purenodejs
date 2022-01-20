@@ -5,6 +5,8 @@
  */
 
 //Environnemtent interfaces for different environments
+import fs from "fs";
+import path from "path";
 interface Env {
   httpPort: number;
   httpsPort: number;
@@ -35,6 +37,10 @@ export const currentEnv =
     ? process.env.NODE_ENV.toLowerCase()
     : "";
 
+//Https dir
+const httpsDir = path.resolve(__dirname, "..", "https");
+
+console.log(httpsDir);
 //Check if that the current environment is one of the environments above, if not, default to staging
 const environmentTypeToExport =
   typeof environnements[currentEnv] == "object"
