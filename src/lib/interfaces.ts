@@ -1,14 +1,15 @@
-import { Callback } from "./types";
+import { Callback, DataCallback } from "./types";
 
 export interface Callbacks {
   [key: string]: (data: any, callback: Callback) => void;
 }
 
 export interface Libs {
-  [key: string]: (
+  create: (
     dir: string,
     file: string,
-    data: string,
-    callback: Callback
+    data: any,
+    callback: DataCallback
   ) => void;
+  basedir: string;
 }
