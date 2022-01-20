@@ -2,17 +2,15 @@ import http from "http";
 import https from "https";
 import url from "url";
 import { StringDecoder } from "string_decoder";
-import HttpStatusCode from "./HttpStatusCode";
+import HttpStatusCode from "./lib/HttpStatusCode";
 import Config from "./config";
 import fs from "fs";
 import path from "path";
+import { Callbacks } from "./lib/interfaces";
+
 const { httpPort, httpsPort, envName } = Config;
 
-type Callback = (statusCode: HttpStatusCode, payload?: object) => void;
 //Callbacks interface for handling requests
-interface Callbacks {
-  [key: string]: (data: any, callback: Callback) => void;
-}
 
 //Instantiate the http server
 const httpServer = http.createServer((req, res) => {
@@ -21,7 +19,7 @@ const httpServer = http.createServer((req, res) => {
 
 //Start a server and have it listen on a port
 httpServer.listen(httpPort, () =>
-  console.log(`Server listening on port: ${httpPort} in ${envName} mode.`)
+  console.log(`Http Server listening on port: ${httpPort} in ${envName} mode.`)
 );
 
 __dirname = path.dirname(__dirname);
@@ -106,9 +104,10 @@ const unifiedServer = (req: any, res: any) => {
 
 //Define our handlers
 const handlers: Callbacks = {};
-handlers.sample = (data, callback) => {
-  //Callback a Http Status code and payload object
-  callback(201, { name: "sample handler" });
+
+//Ping handler
+handlers.ping = (data, callBack) => {
+  callBack(200);
 };
 handlers.notFound = (data, callBack) => {
   callBack(404);
